@@ -1,5 +1,7 @@
 #!flask/bin/python
 from flask import Flask, send_file
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import time
 from pymongo import MongoClient
@@ -29,7 +31,7 @@ def get_time_spent(month):
     return total_time
 
 
-@app.route('')
+@app.route('/')
 def get_usage():
     my_xticks = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
     x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
