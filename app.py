@@ -22,6 +22,15 @@ else:
 print(db)
 
 
+def calculate_hours(sec):
+    if sec <= 3600:
+        return 1
+    elif sec >= 3600:
+        hours = sec // 3600
+        minutes = sec % 60
+        return hours
+
+
 def get_time_spent(month):
     sec_sum = []
     cursor = db.time_spent.find({})
@@ -29,7 +38,7 @@ def get_time_spent(month):
         if month == document['time_stamp'].month:
             sec_sum.append(document['time_span'])
     total_sec = sum(sec_sum)
-    total_time = time.strftime("%H:%M", time.gmtime(total_sec))
+    total_time = calculate_hours(total_sec)
     return total_time
 
 
