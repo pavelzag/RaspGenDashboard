@@ -1,13 +1,15 @@
 #!flask/bin/python
-from flask import Flask, send_file
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import time
 from pymongo import MongoClient
 from configuration import get_db_creds
+from flask import Flask, send_file
+import time
+
 
 app = Flask(__name__)
+generated_image_file = 'generator_usage.png'
 env = get_db_creds('env')
 test_uri = get_db_creds('test_uri')
 prod_uri = get_db_creds('prod_uri')
@@ -21,7 +23,7 @@ print(db)
 
 
 def get_time_spent(month):
-    sec_sum =[]
+    sec_sum = []
     cursor = db.time_spent.find({})
     for document in cursor:
         if month == document['time_stamp'].month:
@@ -45,9 +47,8 @@ def get_usage():
     plt.ylabel('Usage')
     plt.xticks(x, my_xticks)
     plt.title('Generator usage')
-    plt.savefig('foo.png')
-    return send_file('foo.png', mimetype='image/gif')
-    # plt.show()
+    plt.savefig(generated_image_file)
+    return send_file(generated_image_file, mimetype='image/gif')
 
 
 if __name__ == '__main__':
