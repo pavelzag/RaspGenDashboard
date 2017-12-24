@@ -7,17 +7,13 @@ with open(config_path, 'r') as ymlfile:
     cfg = yaml.load(ymlfile)
 
 
-def get_config(parameter_name):
-    return cfg['creds'][parameter_name]
-
-
-def get_white_list():
-    return cfg['white_list']
-
-
-def get_pin():
-    return cfg['pin']
-
-
 def get_db_creds(parameter_name):
-    return cfg['mongodb'][parameter_name]
+    if 'DYNO' in os.environ:
+        is_heroku = True
+    else:
+        is_heroku = False
+
+    if is_heroku:
+        return os.environ.get(parameter_name, 'Theres\'s nothing here')
+    else:
+        return cfg['mongodb'][parameter_name]
