@@ -24,7 +24,7 @@ print(db)
 
 def calculate_hours(sec):
     if sec <= 3600:
-        return 1
+        return 0
     elif sec >= 3600:
         hours = sec // 3600
         minutes = sec % 60
